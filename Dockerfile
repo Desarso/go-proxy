@@ -1,5 +1,5 @@
 # Start from the official Golang base image
-FROM golang:latest AS builder
+FROM golang:alpine AS builder
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -15,19 +15,22 @@ COPY go.mod ./
 COPY . .
 
 # Build the Go app
-RUN go build -o proxy-server .
+RUN go build -o proxy .
 
 # Start a new stage from scratch
 FROM alpine:latest  
 
 # Set the Current Working Directory inside the container
-WORKDIR /root/
+WORKDIR /app/
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/proxy-server .
+COPY --from=builder /app/proxy .
+
+RUN chmod +x proxy
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./proxy-server"]
+# CMD ["sh"]
+CMD ["./proxy"]

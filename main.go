@@ -190,14 +190,14 @@ func main() {
 
 			// Combine the target URL with the requested path and query string only
 			//add r.URL.Path and r.URL.RawQuery to the targetURL
-			newURL := targetURL.String() + r.URL.Path + "?" + r.URL.RawQuery
-			//proxyURL := targetURL.ResolveReference(r.URL)
+			//newURL := targetURL.String() + r.URL.Path + "?" + r.URL.RawQuery
+			proxyURL := targetURL.ResolveReference(r.URL)
 
-			proxyURL, err := url.Parse(newURL)
-			if err != nil {
-				http.Error(w, "Invalid target URL", http.StatusBadRequest)
-				return
-			}
+			// proxyURL, err := url.Parse(newURL)
+			// if err != nil {
+			// 	http.Error(w, "Invalid target URL", http.StatusBadRequest)
+			// 	return
+			// }
 			// fmt.Println("proxyURL: ", proxyURL)
 			// fmt.Println("targetURL: ", targetURL)
 			// fmt.Println("newURL: ", newURL)
